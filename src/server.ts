@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import path from 'node:path';
+import swaggerUi from 'swagger-ui-express';
 import { createExpressEndpoints, initServer } from '@ts-rest/express';
 import { contract } from './api/contracts';
 import { router } from './app/controller';
@@ -48,9 +49,8 @@ const start = async () => {
 
     app.use('/api/public', express.static(path.join(process.cwd(), 'public')));
 
-    app.get('/api/openapi', async (req, res) => {
-      res.json(openApi.document);
-    });
+    app.get('/api/openapi', async (req, res) => res.json(openApi.document));
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApi.document));
 
     createExpressEndpoints(contract, router, app, {
       requestValidationErrorHandler: errorUtil.requestValidationErrorHandler,
