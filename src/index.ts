@@ -1,0 +1,46 @@
+import * as tsConfigPaths from 'tsconfig-paths';
+import dotenv from 'dotenv';
+dotenv.config();
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { Payload } from './api/schema/auth.js';
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: Payload;
+    }
+  }
+}
+
+const baseUrl = './build';
+
+const start = async () => {
+  const tsconfigJson = await fs.readFile(
+    path.join(process.cwd(), 'tsconfig.json'),
+    'utf-8',
+  );
+  const tsconfig = JSON.parse(tsconfigJson) as TsConfig;
+
+  tsConfigPaths.register({
+    baseUrl,
+    paths: tsconfig['compilerOptions']['paths'],
+  });
+
+  import('./server.js');
+};
+start();
+
+type TsConfig = {
+  extends: string;
+  compilerOptions: {
+    rootDir: string;
+    baseUrl: string;
+    outDir: string;
+    esModuleInterop: boolean;
+    paths: {
+      '@src/*': Array<string>;
+    };
+  };
+  include: Array<string>;
+};
