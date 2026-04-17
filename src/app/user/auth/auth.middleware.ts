@@ -9,13 +9,19 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = getEnv('JWT_SECRET');
 export const tokenKey = 'authToken';
 
+type TsRestMiddleware = <T extends AppRoute>(
+  request: TsRestRequest<T>,
+  reply: Response<any>,
+  next: NextFunction,
+) => void;
+
 const extractTokenFromCookie = <T extends AppRoute>(req: TsRestRequest<T>): string | undefined => {
   const token = req.signedCookies?.[tokenKey];
   if (!token) throw err.Unauthorized();
   return token;
 };
 
-export const auth: TsRestRequestHandler<any> = (request, reply, next) => {
+export const auth: TsRestMiddleware = (request, reply, next) => {
   try {
     const token = extractTokenFromCookie(request);
     if (!token) return next(err.Unauthorized());
@@ -29,7 +35,7 @@ export const auth: TsRestRequestHandler<any> = (request, reply, next) => {
   }
 };
 
-const roleGuard = (roles: UserSchema['Schema']['role'][]): TsRestRequestHandler<any> => (request, reply, next) => {
+const roleGuard = (roles: UserSchema['Schema']['role'][]): TsRestMiddleware => (request, reply, next) => {
   auth(request, reply, (error?: any) => {
     if (error) return next(error);
 
@@ -42,6 +48,6 @@ const roleGuard = (roles: UserSchema['Schema']['role'][]): TsRestRequestHandler<
 };
 
 export const middleware = {
-  auth: [auth] as TsRestRequestHandler<AppRoute>[],
-  roleGuard: (roles: UserSchema['Schema']['role'][]) => [roleGuard(roles)] as TsRestRequestHandler<AppRoute>[],
+  auth: [auth] as TsRestRequestHandler<any>[],
+  roleGuard: (roles: UserSchema['Schema']['role'][]) => [roleGuard(roles)] as TsRestRequestHandler<any>[],
 };

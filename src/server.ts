@@ -59,22 +59,18 @@ const start = async () => {
 
     app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
       if (err.status) {
-        res
-          .status(err.status)
-          .send({
-            message: err.message,
-            statusCode: err.status,
-            error: err.name
-          });
+        res.status(err.status).send({
+          message: err.message,
+          statusCode: err.status,
+          error: err.name
+        });
       } else {
         console.error(err);
-        res
-          .status(500)
-          .send({
-            message: 'Internal Server Error',
-            statusCode: 500,
-            error: 'Internal Server Error'
-          });
+        res.status(500).send({
+          message: 'Internal Server Error',
+          statusCode: 500,
+          error: 'Internal Server Error'
+        });
       }
     });
 
