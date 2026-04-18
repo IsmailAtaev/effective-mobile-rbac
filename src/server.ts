@@ -75,7 +75,8 @@ const start = async () => {
     });
 
     app.listen(port as unknown as number, host, () => {
-      console.log(`http://${host}:${port}`);
+      console.log(`http://${host}:${port}/api/openapi`);
+      console.log(`http://${host}:${port}/api-docs`);
     });
   } catch (err) {
     console.log(err);

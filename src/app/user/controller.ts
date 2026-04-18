@@ -18,41 +18,41 @@ export const userRouter = s.router(userContract, {
       return { status: 201, body: r };
     },
   },
-  edit: {
-    middleware: middleware.roleGuard(['admin']),
-    handler: async ({ params, body }) => {
-      const r = await service.edit(params.id, body);
-      return { status: 201, body: r };
-    },
-  },
   getOne: {
-    middleware: middleware.roleGuard(['admin']),
+    middleware: middleware.ownerOrAdmin,
     handler: async ({ params }) => {
       const r = await service.getOne(params.id);
       return { status: 200, body: r };
     },
   },
+  edit: {
+    middleware: middleware.ownerOrAdmin,
+    handler: async ({ params, body, req }) => {
+      let updateData = body;
+
+      if (req.user?.role === 'user') {
+        updateData = {};
+        if (body.status !== undefined) {
+          updateData.status = body.status;
+        }
+      }
+
+      const r = await service.edit(params.id, updateData);
+      return { status: 201, body: r };
+    },
+  },
   remove: {
-    middleware: middleware.roleGuard(['admin']),
+    middleware: middleware.ownerOrAdmin,
     handler: async ({ params }) => {
       const r = await service.remove(params.id);
       return { status: 201, body: r };
     },
   },
-
-  getProfile: {
-    middleware: middleware.auth,
-    handler: async ({ req }) => {
-      const r = await service.profile(req.user!.id);
-      return { status: 200, body: r };
+  changePassword: {
+    middleware: middleware.roleGuard(['admin']),
+    handler: async ({ params, body }) => {
+      const r = await service.changePassword(params.id, body);
+      return { status: 201, body: r };
     },
   },
-
-  // changePassword: {
-  //   middleware: middleware.auth,
-  //   handler: async ({ req, body }) => {
-  //     const r = await service.changePassword(req.user!.id, body);
-  //     return { status: 201, body: r };
-  //   },
-  // },
 });

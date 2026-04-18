@@ -51,7 +51,7 @@ const changePassword = async (id: string, p: { password: string }) => {
   const password = await bcryptService.hashPass(p.password);
   await repo.edit(id, { password });
 
-  return repo.getOne(id);
+  return one;
 };
 
 export const userService = {

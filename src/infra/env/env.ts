@@ -13,9 +13,12 @@ export const envSchema = z.object({
   COOKIE_SECURE: strBool.default(true),
   COOKIE_SAME_SITE: z.enum(['none', 'lax', 'strict']).default('none'),
 
-  SMS_URL: z.string().url(),
-  SMS_SECRET: z.string(),
   ALLOWED_ORIGINS: z.string(),
+
+  EMAIL_HOST: z.string(),
+  EMAIL_PORT: z.coerce.number(),
+  EMAIL_ADDRESS: z.string(),
+  EMAIL_PASSWORD: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

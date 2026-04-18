@@ -15,6 +15,14 @@ export const login = userSchema.schema.pick({ email: true, password: true });
 export type Login = z.infer<typeof login>;
 export const loginRes = meRes;
 
+export const register = userSchema.schema.pick({
+  fio: true,
+  birthday: true,
+  email: true,
+  password: true,
+});
+export type Register = z.infer<typeof register>;
+
 const forgotPassword = userSchema.schema.pick({ email: true });
 type ForgotPassword = z.infer<typeof forgotPassword>;
 
@@ -34,12 +42,14 @@ export const authSchema = {
   meRes,
   login,
   loginRes,
+  register,
   forgotPassword,
   forgotPasswordVerify,
 };
 
 export type AuthSchema = {
   Login: Login;
+  Register: Register;
   Payload: Payload;
   ForgotPassword: ForgotPassword;
   ForgotPasswordVerify: ForgotPasswordVerify;

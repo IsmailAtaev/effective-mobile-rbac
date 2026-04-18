@@ -49,6 +49,7 @@ export const edit = schema
     fio: true,
     birthday: true,
     email: true,
+    status: true,
   })
   .partial()
 

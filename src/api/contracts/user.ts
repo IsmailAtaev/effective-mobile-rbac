@@ -49,25 +49,15 @@ export const userContract = c.router(
         201: schema.getOneRes,
       },
     },
-
-
-    getProfile: {
-      method: 'GET',
-      path: '/profile',
+    changePassword: {
+      method: 'POST',
+      path: '/:id/change-password',
+      pathParams: paramsId,
+      body: schema.changePassword,
       responses: {
-        200: schema.getOneRes,
+        201: schema.getOneRes,
       },
     },
-
-    // changePassword: {
-    //   method: 'POST',
-    //   path: '/change-password',
-    //   body: schema.changePassword,
-    //   responses: {
-    //     201: schema.getOneRes,
-    //   },
-    // },
-
   },
   { pathPrefix: '/api/users' },
 );

@@ -15,6 +15,14 @@ export const authContract = c.router(
         201: schema.loginRes,
       },
     },
+    register: {
+      method: 'POST',
+      path: '/register',
+      body: schema.register,
+      responses: {
+        201: schema.loginRes,
+      },
+    },
     me: {
       method: 'GET',
       path: '/me',

@@ -47,7 +47,16 @@ const roleGuard = (roles: UserSchema['Schema']['role'][]): TsRestMiddleware => (
   });
 };
 
+const ownerCheck: TsRestMiddleware = (request, reply, next) => {
+    const userId = request.params.id;
+    if (request.user?.role === 'admin' || request.user?.id === userId) {
+      return next();
+    }
+    next(err.Forbidden());
+};
+
 export const middleware = {
   auth: [auth] as TsRestRequestHandler<any>[],
   roleGuard: (roles: UserSchema['Schema']['role'][]) => [roleGuard(roles)] as TsRestRequestHandler<any>[],
+  ownerOrAdmin: [auth, ownerCheck] as TsRestRequestHandler<any>[],
 };

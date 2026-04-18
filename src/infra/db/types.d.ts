@@ -22,6 +22,15 @@ export interface Users {
   status: Generated<boolean>;
 }
 
+export interface VerificationCodes {
+  code: string;
+  createdAt: Generated<Timestamp>;
+  email: string;
+  expiresAt: Timestamp;
+  id: Generated<string>;
+}
+
 export interface DB {
   users: Users;
+  verification_codes: VerificationCodes;
 }
