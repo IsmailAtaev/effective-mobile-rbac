@@ -95,6 +95,11 @@ src/
 - `DELETE /api/users/:id` - Delete user (Self or Admin)
 - `POST /api/users/:id/change-password` - Force change user password (Admin only)
 
+## 📖 API Documentation
+
+- **Swagger UI**: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+- **OpenAPI JSON**: [http://localhost:3000/api/openapi](http://localhost:3000/api/openapi)
+
 ## 🧪 Testing
 
 ```bash
