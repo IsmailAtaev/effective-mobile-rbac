@@ -7,7 +7,11 @@ export default defineConfig({
   kysely: new Kysely<any>({
     dialect: new PostgresDialect({
       pool: new Pool({
-        connectionString: process.env.DATABASE_URL,
+        database: process.env.DB_NAME,
+        user: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        port: parseInt(process.env.DB_PORT || '5432', 10),
+        host: 'localhost',
       }),
     }),
   }),

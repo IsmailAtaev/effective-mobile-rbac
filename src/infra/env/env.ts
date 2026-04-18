@@ -3,7 +3,11 @@ import { z } from 'zod';
 
 export const envSchema = z.object({
   NODE_ENV: z.string(),
-  DATABASE_URL: z.string().url(),
+  DB_NAME: z.string(),
+  DB_USERNAME: z.string(),
+  DB_PASSWORD: z.coerce.string(),
+  DB_ROOT_PASSWORD: z.coerce.string().optional(),
+  DB_PORT: z.coerce.number(),
   PORT: z.coerce.number().optional().default(3000),
   HOST: z.string(),
   JWT_SECRET: z.string(),
