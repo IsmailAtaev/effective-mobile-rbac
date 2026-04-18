@@ -1,5 +1,5 @@
-import { getEnv } from '@src/infra/env/service';
 import nodemailer from 'nodemailer';
+import { getEnv } from '@src/infra/env/service';
 
 const transporter = nodemailer.createTransport({
   host: getEnv('EMAIL_HOST'),
