@@ -27,10 +27,10 @@ HOST=127.0.0.1
 
 JWT_SECRET='JWT_SECRET'
 
-DB_NAME=database_name
+DB_NAME=database_name 
 DB_USERNAME=database_user
 DB_PASSWORD=database_password
-DB_ROOT_PASSWORD=database_root_password
+DB_ROOT_PASSWORD=database_root_password 
 DB_PORT=5464 # or 5432 (5464 - docker, 5432 - local)
 
 COOKIE_SECRET='COOKIE_SECRET'
@@ -38,9 +38,9 @@ COOKIE_HTTP_ONLY='true'
 COOKIE_SECURE='true'
 COOKIE_SAME_SITE='none'
 
-EMAIL_HOST=smtp.mail.ru
-EMAIL_PORT=465
-EMAIL_ADDRESS=your_email_address@mail.ru
+EMAIL_HOST=your_email_host # e.g. smtp.mail.ru
+EMAIL_PORT=your_email_port # 465 for SSL, 587 for TLS
+EMAIL_ADDRESS=your_email_address 
 EMAIL_PASSWORD=your_email_password
 
 ALLOWED_ORIGINS='http://localhost:5173, http://127.0.0.1:5173,'
